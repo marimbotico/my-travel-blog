@@ -1,0 +1,112 @@
+.single-post {
+    width: 100%;
+    height: 50%;
+    height: calc(100vh - 11vh);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(/public/explore-the-world.jpeg);
+    background-position: center;
+    background-size: cover;
+    overflow: auto;
+  }
+/*   
+  .single-post .card-container {
+    height: 100%;
+    width: 85%;
+    max-width: 1400px;
+    background-color: white;
+  }
+  
+  .single-post .card-container .card-img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .single-post .card-container .card-img img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .single-post .card-container .card-content {
+    border: 1px solid lightgray;
+    padding: 2%;
+    height: 40%;
+  }
+  
+  .single-post .card-container .card-content .card-header {
+    margin-top: 10px;
+  }
+  
+  .single-post .card-container .card-content .card-description {
+    border: 1px solid lightgray;
+    height: 60%;
+    display: flex;
+  }
+  
+  .single-post .card-container .card-content .card-description .card-text {
+    height: 100%;
+    width: 65%;
+    padding: 2%;
+    overflow: auto;
+  }
+  
+  .single-post .card-container .card-content .card-description .card-comments {
+    height: 100%;
+    width: 35%;
+    overflow: auto;
+    border-left: 1px solid darkgray;
+  }
+  
+  .single-post
+    .card-container
+    .card-content
+    .card-description
+    .card-comments
+    .add-comment {
+    height: 75px;
+    width: 100%;
+    padding: 0 2%;
+  }
+  
+  .single-post
+    .card-container
+    .card-content
+    .card-description
+    .card-comments
+    .add-comment
+    input {
+    height: 40px;
+    width: 80%;
+    border: 1px solid lightgray;
+    padding: 2%;
+  }
+  
+  .single-post .card-container .card-content .card-footer {
+    border: 1px solid lightgray;
+    height: 15%;
+    width: 100%;
+    display: flex;
+  }
+  
+  .single-post .card-container .card-content .card-footer .item {
+    border: 1px solid lightgray;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .single-post .card-container .card-content .card-footer span {
+    font-weight: 700;
+    font-style: italic;
+    margin-right: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    .single-post {
+      background-size: 150% 100%;
+    }
+  }
+    */ 

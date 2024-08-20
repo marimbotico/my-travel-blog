@@ -1,0 +1,45 @@
+.home {
+    width: 100%;
+    height: calc(100vh - 11vh);
+    display: flex;
+    justify-content:space-between;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(/public/explore-the-world.jpeg);
+    background-size: contain;
+    background-position: center;
+  }
+  
+  .home h1 {
+    font-weight: 900;
+    font-style: italic;
+    color: rgb(95, 16, 17);
+    text-shadow: 5px 5px 5px rgb(178, 176, 176);
+  }
+  
+  .home button { 
+    height: 50px;
+    width: 200px;
+    border-radius: 18px;
+    outline: none;
+    border: none;
+    background: rgb(5, 187, 228);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.25s ease-in-out;
+    font-style: italic;
+    font-size: 1.2rem;
+    /* font-weight: 700; */
+    color: rgb(15, 14, 14);
+  }
+  
+  .home button:hover {
+    background: rgb(55, 40, 40);
+    color: rgb(38, 211, 93);
+  }
+  
+  @media (max-width: 768px) {
+    .home {
+      background-size: 150% 100%;
+    }
+  }
+  
