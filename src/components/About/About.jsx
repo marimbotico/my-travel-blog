@@ -5,22 +5,23 @@ import { imagesApi } from "../imagesApi";
 const About = () => {
     return (
         <div className="about-container">
+            {/* React bootstrap carousel set up */}
             <Carousel className="carousel-background">
-                {imagesApi.length > 0 ? (
-                    imagesApi.map((image, index) => (
+                {imagesApi.length > 0 ? ( 
+                    imagesApi.map((image, index) => (//mapping over the array of the imagesApi
                         <Carousel.Item interval={3000} key={index}>
                             <img
-                                className={`d-block w-100 carousel-image ${image.centerImage ? "center" : "top"}`}
+                                className={`d-block w-100 carousel-image ${image.centerImage ? "center" : "top"}`}// if the image is not centered then show the top
                                 src={image.image}
                                 alt={image.title || `Slide ${index + 1}`}
                             />
                         </Carousel.Item>
                     ))
-                ) : (
+                ) : (// in case the carousel of images doesn't load I am setting up an image as default
                     <Carousel.Item>
                         <img
                             className="d-block w-100 carousel-image"
-                            src="default-image-url.jpg"
+                            src="cofete.jpg"
                             alt="Default"
                         />
                         <Carousel.Caption>

@@ -1,7 +1,8 @@
 const API_URL = "https://6554b47463cafc694fe6d455.mockapi.io/posts";// database url
 
+// Setting different commands within the postsApi const such as get, getById, post, createPost, updatePost, put & delete.
 export const postsApi = {
-    get: async () => {// async method that fetches all the companies
+    get: async () => {// async method that fetches all the posts
         try {
             const response = await fetch(API_URL);// sends get request to API and awaits response
             if (!response.ok) {
@@ -13,6 +14,7 @@ export const postsApi = {
         }
     },
     getById: async (id) => {// async method that fetches a post by it's specific Id
+          // console.log("createPost in postsApi.jsx - Running" , getById)
         try {
             const response = await fetch(`${API_URL}/${id}`);
             if (!response.ok) {
@@ -42,7 +44,7 @@ export const postsApi = {
         }
     },
     createPost: async (postData) => {
-        // console.log("createPost in postsApi.jsx - Running" , post)
+        // console.log("createPost in postsApi.jsx - Running" , createPost)
         try {
             const response = await fetch(API_URL, {
                 method: 'POST',// specifies the request to create new data
@@ -61,7 +63,7 @@ export const postsApi = {
     },
     updatePost: async (id, postData) => {
         try {
-            // console.log("updatePost in postsApi.jsx- Running", post)
+            console.log("updatePost in postsApi.jsx- Running", id)
             const response = await fetch(`${API_URL}/${id}`, {//specifies which post to update
                 method: 'PUT',// use PUT to update
                 headers: {
@@ -95,7 +97,7 @@ export const postsApi = {
             console.log('Error updating post:', e);
         }
     },
-    delete: async (id) => {// deletes a post by id. Having trouble here (id) or (post._id)?
+    delete: async (id) => {// deletes a post by id.
         try {
             console.log("delete in postsApi.jsx - Running ", id);
             const response = await fetch(`${API_URL}/${id}`, {

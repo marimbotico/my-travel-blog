@@ -7,5 +7,5 @@ const Footer = () => {
     </footer>
   );
 };
-
+// Nothing special on the footer page just a little Copyright at the bottom
 export default Footer;

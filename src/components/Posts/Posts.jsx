@@ -1,41 +1,18 @@
 import "./Posts.css";
 import PostList from './PostList';
-import { postsApi } from "../postsApi";
-import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import withPosts from './withPosts'; // Import the HOC
 
-
-
-const Posts = () => {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        fetchPosts();
-    }, []);
-
-    const fetchPosts = async () => {
-        try {
-            setLoading(true);
-            const posts = await postsApi.get();
-            console.log(posts);
-            setPosts(posts);
-        } catch (error) {
-            console.error(error); 
-        } finally {
-            setLoading(false);
-        }
-    }
-
+const Posts = ({ posts, loading }) => { // pass posts and loading as props
     return (
         <div className="posts">
             {loading ? (
                 <Spinner animation="border" variant="primary" />
             ) : (
-                <PostList posts={posts} />
+                <PostList posts={posts} /> // Passes posts to PostList as a prop
             )}
         </div>
     );
 };
 
-export default Posts;
+export default withPosts(Posts); // Wrap the component with the HOC

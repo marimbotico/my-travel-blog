@@ -2,19 +2,21 @@ nav {
   height: 6vh;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* Ensure proper spacing */
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(7, 78, 37, 0.2);
+  padding: 0 1rem; /* Add some padding to prevent content from sticking to the edges */
 }
 
 nav .logo {
   font-size: 2.5rem;
   font-weight: 900;
-  color: green; /* Change the logo color to green */
+  color: green;
 }
 
 nav ul {
   margin: 0;
+  padding: 0; /* Ensure no padding */
   height: 100%;
   display: flex;
   align-items: center;
@@ -25,14 +27,28 @@ nav ul li {
   font-size: 1.5rem;
   font-weight: 600;
   transition: all 0.25s ease-in-out;
-  color: green; /* Change the font color of list items to green */
-}
-
-nav ul li:nth-of-type(1),
-nav ul li:nth-of-type(2) {
-  margin-right: 25px;
+  color: green;
+  padding: 0 10px; /* Add padding between menu items */
 }
 
 nav ul li:hover {
-  color: darkgray; /* Keeps the hover effect */
+  color: darkgray;
+}
+
+@media (max-width: 912px) {
+  nav {
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+    height: auto;
+  }
+  
+  nav ul {
+    flex-direction: column; /* Stack menu items vertically */
+    width: 100%;
+  }
+
+  nav ul li {
+    text-align: center; /* Center text */
+    width: 100%;
+    padding: 10px 0; /* Adjust padding for a better touch experience */
+  }
 }

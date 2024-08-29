@@ -15,12 +15,14 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        {/* Using react 18 latest syntax for navigation setup */}
         <Route exact path="/" element={<Home />} />
         <Route path="/posts" element={<Posts />} />
         <Route path="/posts/:postId" element={<SinglePost />} />
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
+      {/* React-Toastify allows you to add notifications to your app with ease. */}
       <ToastContainer
         position="top-right"
         autoClose={5000}

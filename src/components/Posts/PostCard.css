@@ -1,11 +1,27 @@
 .post-card {
   position: relative;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-card .card-img-top {
+  height: 200px; /* Adjust as needed */
+  object-fit: cover; /* This ensures the image covers the area without distortion */
 }
 
 .post-card .card-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  flex-grow: 1;
+}
+
+.post-card .card-title,
+.post-card .card-text {
+  margin-bottom: 1rem;
+}
+
+.post-card .btn {
+  align-self: start; /* Ensures buttons are aligned consistently */
 }

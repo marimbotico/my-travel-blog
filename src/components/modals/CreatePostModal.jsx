@@ -1,41 +1,25 @@
 import "./CreatePostModal.css";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form"; // Corrected the import statement
+import Form from "react-bootstrap/Form"; 
 import Modal from "react-bootstrap/Modal";
 import { postsApi } from "../postsApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import withPosts from "../Posts/withPosts";
 
-function CreatePostModal() {
+function CreatePostModal({ posts, loading, fetchPosts }) {//passing posts and loading as prop
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [postData, setPostData] = useState({
+    const [postData, setPostData] = useState({// define all the properties of postData
         author: '',
         title: '',
-        destination: '', // Added the missing comma
+        destination: '', 
         imgUrl: '',
         story: '',
     });
 
-    const fetchPosts = async () => {
-        try {
-            setLoading(true);
-            const foundPost = await postsApi.get();
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchPosts();
-    }, []);
-
-
-    const handleClose = () => {
+    const handleClose = () => {// resets the postData state to it's initial empty state 
         setPostData({
             author: '',
             title: '',
@@ -43,17 +27,20 @@ function CreatePostModal() {
             imgUrl: '',
             story: '',
         });
-        setShow(false);
+        setShow(false);//hides the modal by setting show to false.
     };
 
     const handleShow = () => setShow(true);
 
     const handleChange = (e) => {
         e.preventDefault();
-        const { name, value } = e.target;
+        const { name, value } = e.target;// name input field being updated
         setPostData({
-            ...postData,
+            ...postData,//spreads the current state object into a new object
             [name]: value,
+            // This dynamically sets the property of the new object where the property 
+            // name is the value of name (e.g., author, title, destination, etc.), and the value is 
+            // the current value of the input field.
         });
     };
 
@@ -61,26 +48,25 @@ function CreatePostModal() {
         e.preventDefault();
         console.log(postData);
         const data = {
-            ...postData,
-            published: false,
+            ...postData,// creates a new object with existing properties of postData
+            published: false,//backend purposes
         };
         try {
-            setLoading(true);
-            await postsApi.createPost(data);
+            await postsApi.createPost(data);// create post method
             toast.success("Post created successfully!");
-            fetchPosts();
+            fetchPosts();//refreshes and gets all the posts again
             navigate("/posts");
         } catch (error) {
             console.error(error);
             toast.error("Error creating post");
         } finally {
-            setLoading(false);
             handleClose();
         }
     }
 
 
     return (
+        //Bootstrap modal setting from react-bootstrap
         <div className="create-post-modal">
             <Button variant="primary" onClick={handleShow}>Create Post</Button>
             <Modal show={show} onHide={handleClose}>
@@ -161,4 +147,4 @@ function CreatePostModal() {
     );
 }
 
-export default CreatePostModal;
+export default withPosts(CreatePostModal);

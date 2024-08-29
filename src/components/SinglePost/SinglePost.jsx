@@ -1,8 +1,8 @@
 import "./SinglePost.css";
 import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { postsApi } from "../postsApi";
-import { Button, Spinner, ButtonGroup } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import CommentsList from "../Comments/CommentsList";
 import { toast } from "react-toastify";
 import Card from 'react-bootstrap/Card';
@@ -14,14 +14,14 @@ const SinglePost = () => {
     const [loading, setLoading] = useState(false);
     const [post, setPost] = useState({});
     const [comment, setComment] = useState('');
-    const [postData, setPostData] = useState({
+    const [postData, setPostData] = useState({// sets all the properties of state
         author: '',
         title: '',
         destination: '',
         imgUrl: '',
         story: '',
     });
-    const updateAccordionRef = useRef(null);
+    const [activeKey, setActiveKey] = useState(null); // State to control accordion toggle
 
     useEffect(() => {
         fetchPosts();
@@ -30,7 +30,7 @@ const SinglePost = () => {
     const fetchPosts = async () => {
         try {
             setLoading(true);
-            const foundPost = await postsApi.get(postId);
+            const foundPost = await postsApi.getById(postId);
             setPost(foundPost);
             setPostData(foundPost); // Populate the update form with current post data
         } catch (error) {
@@ -45,12 +45,9 @@ const SinglePost = () => {
         try {
             setLoading(true);
             const updatedPost = await postsApi.updatePost(postId, postData);
-            setPost(updatedPost);
+            setPost(updatedPost);// sets state to updatedPost
             toast.success("Post updated successfully!");
-            // Collapse the accordion after successful submission
-            if (updateAccordionRef.current) {
-                updateAccordionRef.current.click();
-            }
+            setActiveKey(null); // Close the accordion after successful submission
         } catch (error) {
             console.error("Error updating this post!", error);
             toast.error("Failed to update the post.");
@@ -83,12 +80,12 @@ const SinglePost = () => {
     const deleteComment = async (index) => {
         try {
             setLoading(true);
-            const updatedComments = post.comments.filter((_, i) => i !== index);
+            const updatedComments = post.comments.filter((_, i) => i !== index);// filters out the comments by their index
             const updatedPost = await postsApi.updatePost(postId, {
-                ...post,
+                ...post,// creates a new object and appends the new comment to the comments section
                 comments: updatedComments,
             });
-            setPost(updatedPost);
+            setPost(updatedPost);// updates setPost state to updatedPost
         } catch (e) {
             console.error('Error deleting comment:', e);
             toast.error("Failed to delete the comment.");
@@ -100,8 +97,11 @@ const SinglePost = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPostData((prevData) => ({
-            ...prevData,
+            ...prevData,// creates a new object with the same properties of the previous
             [name]: value,
+        // This dynamically sets the property of the new object where the property name is the value 
+        // of name (e.g., author, title, destination, etc.), and the value is the current value of 
+        // the input field.
         }));
     }
 
@@ -121,7 +121,7 @@ const SinglePost = () => {
                             <Button variant="outline-primary" className="align-self-start">Back to All Posts</Button>
                         </Link>
 
-                        <Accordion className="align-self-end">
+                        <Accordion activeKey={activeKey} onSelect={setActiveKey} className="align-self-end">
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>Update Post</Accordion.Header>
                                 <Accordion.Body>
@@ -171,7 +171,7 @@ const SinglePost = () => {
                                                 onChange={handleInputChange}
                                             />
                                         </Form.Group>
-                                        <Button ref={updateAccordionRef} variant="primary" type="submit" disabled={loading}>
+                                        <Button variant="primary" type="submit" disabled={loading}>
                                             {loading ? <Spinner as="span" animation="border" size="sm" /> : 'Update Post'}
                                         </Button>
                                     </Form>
@@ -233,10 +233,3 @@ const SinglePost = () => {
 };
 
 export default SinglePost;
-
-
-
-
-
-
-

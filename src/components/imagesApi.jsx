@@ -1,3 +1,5 @@
+// created my own api from images in the images folder to be used in a carousel on the about page
+
 export const imagesApi = [
     {
         id: "1",
