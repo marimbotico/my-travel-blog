@@ -26,8 +26,11 @@ const PostCard = ({ post }) => {
 
     const deletePost = async (id) => {
         try {
+            console.log("Attempting to delete post with ID:", id);
             await postsApi.delete(id); // Deletes post by ID
-            setPosts(posts.filter(post => post.id !== id)); // Update the state to remove the deleted post
+            console.log("Post deleted successfully");
+            // Fetch the updated list of posts after deletion
+            fetchPosts();
         } catch (error) {
             console.error('Failed to delete post:', error);
         }
@@ -46,8 +49,8 @@ const PostCard = ({ post }) => {
                         <Button variant="outline-primary">Read full story</Button>
                     </Link>
                     <Button 
-                        variant="secondary" 
-                        onClick={() => deletePost(post.id)} // Pass the post ID to delete
+                        variant="outline-danger" 
+                        onClick={() => deletePost(post.id)} // Correctly pass the post ID to delete
                     >
                         Delete Post
                     </Button>
@@ -58,3 +61,4 @@ const PostCard = ({ post }) => {
 };
 
 export default PostCard;
+

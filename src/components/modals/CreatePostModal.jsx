@@ -1,12 +1,11 @@
 import "./CreatePostModal.css";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form"; // Corrected the import statement
 import Modal from "react-bootstrap/Modal";
 import { postsApi } from "../postsApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function CreatePostModal() {
     const navigate = useNavigate();
@@ -19,6 +18,22 @@ function CreatePostModal() {
         imgUrl: '',
         story: '',
     });
+
+    const fetchPosts = async () => {
+        try {
+            setLoading(true);
+            const foundPost = await postsApi.get();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
 
     const handleClose = () => {
         setPostData({
@@ -35,14 +50,14 @@ function CreatePostModal() {
 
     const handleChange = (e) => {
         e.preventDefault();
-        const { name, value } = e.target; // Corrected the destructuring
+        const { name, value } = e.target;
         setPostData({
             ...postData,
             [name]: value,
         });
     };
 
-    const handleSubmit = async (e) => { // Added the event parameter
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(postData);
         const data = {
@@ -53,8 +68,9 @@ function CreatePostModal() {
             setLoading(true);
             await postsApi.createPost(data);
             toast.success("Post created successfully!");
+            fetchPosts();
             navigate("/posts");
-        } catch (error) { // Corrected the error handling
+        } catch (error) {
             console.error(error);
             toast.error("Error creating post");
         } finally {
@@ -62,6 +78,7 @@ function CreatePostModal() {
             handleClose();
         }
     }
+
 
     return (
         <div className="create-post-modal">
@@ -120,7 +137,7 @@ function CreatePostModal() {
                         <Form.Group className="mb-3" controlId="story">
                             <Form.Label>Story</Form.Label>
                             <Form.Control
-                                as="textarea" // Corrected the input type to textarea
+                                as="textarea"
                                 name="story"
                                 placeholder="Your story..."
                                 value={postData.story}

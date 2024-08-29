@@ -1,29 +1,29 @@
+import React from 'react';
 import { Link } from "react-router-dom";
-import "./Navbar.css";
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import CreatePostModal from "../modals/CreatePostModal";
+import "./Navbar.css";
 
-function Navbar() {
+function CustomNavbar() {
     return (
-        <nav>
-            <div className="logo">
-                {/* Using link to navigate to different pages */}
-                <Link to="/">Home</Link>
-            </div>
-            <ul>
-                <li>
-                    <Link to="/posts">Posts</Link>
-                </li>
-                <li>
-                    <Link to="/about">About Me</Link>
-                </li>
-                <li>
-                    <CreatePostModal /> 
-                    {/* In order to link with react router need to use the CreateModal */}
-                </li>
-            </ul>
-        </nav>
-    )
+        <Navbar bg="dark" variant="dark" expand="lg" sticky="top" className="mb-4 shadow-sm">
+            <Container>
+                <Navbar.Brand as={Link} to="/" className="logo">
+                    MyBlog
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/posts">Posts</Nav.Link>
+                        <Nav.Link as={Link} to="/about">About Me</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        <CreatePostModal />
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
 }
 
-export default Navbar;
-
+export default CustomNavbar;

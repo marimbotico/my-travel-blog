@@ -1,23 +1,35 @@
-import React from "react";
 import "./About.css";
 import Carousel from "react-bootstrap/Carousel";
-import Posts from "../Posts/Posts";
+import { imagesApi } from "../imagesApi";
 
-const About = ({ posts }) => {
+const About = () => {
     return (
         <div className="about-container">
             <Carousel className="carousel-background">
-                {posts.map((post) => (
-                    <Carousel.Item interval={3000} key={post.id}>
+                {imagesApi.length > 0 ? (
+                    imagesApi.map((image, index) => (
+                        <Carousel.Item interval={3000} key={index}>
+                            <img
+                                className={`d-block w-100 carousel-image ${image.centerImage ? "center" : "top"}`}
+                                src={image.image}
+                                alt={image.title || `Slide ${index + 1}`}
+                            />
+                        </Carousel.Item>
+                    ))
+                ) : (
+                    <Carousel.Item>
                         <img
                             className="d-block w-100 carousel-image"
-                            src={post.imgUrl}
-                            alt={post.title}
+                            src="default-image-url.jpg"
+                            alt="Default"
                         />
+                        <Carousel.Caption>
+                            <p>No images available</p>
+                        </Carousel.Caption>
                     </Carousel.Item>
-                ))}
+                )}
             </Carousel>
-            <div className="bio-text">
+            <div className="bio-card">
                 <h1>About Me</h1>
                 <p>
                     Welcome to my travel blog! I love exploring new places and sharing my experiences.

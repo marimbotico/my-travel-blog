@@ -1,17 +1,18 @@
-import { Link } from "react-router-dom";
-import "./CommentsList.css";
-import Accordion from 'react-bootstrap/Accordion';
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
-const CommentsList = ({ comments = [] }) => {
+const CommentsList = ({ comments, deleteComment }) => {
     return (
-        <Accordion defaultActiveKey={comments[0]}>
+        <div>
             {comments.map((comment, index) => (
-                <Accordion.Item key={index} eventKey={index}>
-                    <Accordion.Header> Comment # {index + 1}</Accordion.Header>
-                    <Accordion.Body>{comment}</Accordion.Body>
-                </Accordion.Item>
+                <div key={index} className="comment-item">
+                    <p>{comment}</p>
+                    <Button variant="outline-danger" onClick={() => deleteComment(index)}>
+                        Delete
+                    </Button>
+                </div>
             ))}
-        </Accordion>
+        </div>
     );
 };
 
