@@ -1,19 +1,31 @@
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 import withPosts from './withPosts'; // Import the HOC
 import { postsApi } from '../postsApi';
 
-const PostCard = ({ post, fetchPosts }) => { // No need to manage posts state here
+const PostCard = ({ post, fetchPosts }) => {
+    const [loading, setLoading] = useState(false);
 
     const deletePost = async (id) => {
+        // Optimistic UI update: assume deletion will succeed and update the UI immediately
         try {
+            setLoading(true);
             console.log("Attempting to delete post with ID:", id);
+
+            // Remove the post optimistically from the UI
+            fetchPosts(prevPosts => prevPosts.filter(p => p.id !== id));
+
+            // Call the API to delete the post
             await postsApi.delete(id);
             console.log("Post deleted successfully");
-            fetchPosts(); // reset the page to all posts
         } catch (error) {
             console.error('Failed to delete post:', error);
+            // Re-fetch the posts to ensure the UI is consistent if the deletion fails
+            fetchPosts();
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -32,8 +44,9 @@ const PostCard = ({ post, fetchPosts }) => { // No need to manage posts state he
                     <Button
                         variant="outline-danger"
                         onClick={() => deletePost(post.id)}
+                        disabled={loading} // Disable the button while loading
                     >
-                        Delete Post
+                        {loading ? 'Deleting...' : 'Delete Post'}
                     </Button>
                 </div>
             </Card.Body>

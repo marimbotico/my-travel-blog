@@ -1,4 +1,4 @@
-const API_URL = "https://6554b47463cafc694fe6d455.mockapi.io/posts";// database url
+const API_URL = "https://66b412549f9169621ea1b740.mockapi.io/users/post";// database url
 
 // Setting different commands within the postsApi const such as get, getById, post, createPost, updatePost, put & delete.
 export const postsApi = {

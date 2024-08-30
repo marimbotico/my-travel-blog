@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import withPosts from "../Posts/withPosts";
 
-function CreatePostModal({ posts, loading, fetchPosts }) {//passing posts and loading as prop
+function CreatePostModal({ posts, loading, fetchPosts, setPosts }) { // Added setPosts prop
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const [postData, setPostData] = useState({// define all the properties of postData
+    const [postData, setPostData] = useState({ // Define all the properties of postData
         author: '',
         title: '',
         destination: '', 
@@ -19,7 +19,7 @@ function CreatePostModal({ posts, loading, fetchPosts }) {//passing posts and lo
         story: '',
     });
 
-    const handleClose = () => {// resets the postData state to it's initial empty state 
+    const handleClose = () => { // Resets the postData state to its initial empty state 
         setPostData({
             author: '',
             title: '',
@@ -27,46 +27,50 @@ function CreatePostModal({ posts, loading, fetchPosts }) {//passing posts and lo
             imgUrl: '',
             story: '',
         });
-        setShow(false);//hides the modal by setting show to false.
+        setShow(false); // Hides the modal by setting show to false.
     };
 
     const handleShow = () => setShow(true);
 
     const handleChange = (e) => {
         e.preventDefault();
-        const { name, value } = e.target;// name input field being updated
+        const { name, value } = e.target; // Name input field being updated
         setPostData({
-            ...postData,//spreads the current state object into a new object
+            ...postData, // Spreads the current state object into a new object
             [name]: value,
-            // This dynamically sets the property of the new object where the property 
-            // name is the value of name (e.g., author, title, destination, etc.), and the value is 
-            // the current value of the input field.
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(postData);
-        const data = {
-            ...postData,// creates a new object with existing properties of postData
-            published: false,//backend purposes
+        const newPost = {
+            ...postData, // Creates a new object with existing properties of postData
+            id: Math.random().toString(36).substring(2, 15), // Generate a temporary ID
+            createdAt: new Date().toISOString(),
+            published: false, // Backend purposes
         };
+
+        // Optimistic UI update: Add the new post to the UI immediately
+        setPosts(prevPosts => [newPost, ...prevPosts]);
+
         try {
-            await postsApi.createPost(data);// create post method
+            console.log("Creating post:", newPost);
+            await postsApi.createPost(newPost); // API call to create post
             toast.success("Post created successfully!");
-            fetchPosts();//refreshes and gets all the posts again
+            fetchPosts(); // Refreshes and gets all the posts again
             navigate("/posts");
         } catch (error) {
-            console.error(error);
+            console.error("Error creating post:", error);
             toast.error("Error creating post");
+            
+            // Revert optimistic update if the creation fails
+            setPosts(prevPosts => prevPosts.filter(post => post.id !== newPost.id));
         } finally {
             handleClose();
         }
-    }
-
+    };
 
     return (
-        //Bootstrap modal setting from react-bootstrap
         <div className="create-post-modal">
             <Button variant="primary" onClick={handleShow}>Create Post</Button>
             <Modal show={show} onHide={handleClose}>

@@ -55,6 +55,7 @@ const withPosts = (WrappedComponent) => {
                 loading={loading}
                 fetchPosts={fetchPosts}
                 fetchPostById={fetchPostById}
+                setPosts={setPosts}
                 {...props}
                 //define all the properties of the wrapped component which is an
             />
