@@ -25,24 +25,7 @@ export const postsApi = {
             console.log('Error fetching post by Id:', e);
         }
     },
-    post: async (post) => {
-        console.log("post in postsApi.jsx - Running" , post)
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',// specifies the request to create new data
-                headers: {
-                    'Content-Type': 'application/json',// json data
-                },
-                body: JSON.stringify(post),// converts object to string
-            });
-            if (!response.ok) {
-                throw new Error('Failed to add post');
-            }
-            return await response.json();
-        } catch (e) {
-            console.log('Error adding post:', e);
-        }
-    },
+
     createPost: async (postData) => {
         // console.log("createPost in postsApi.jsx - Running" , createPost)
         try {
@@ -56,7 +39,9 @@ export const postsApi = {
             if (!response.ok) {
                 throw new Error('Failed to add post');
             }
-            return await response.json();
+            const createdPost = await response.json();
+            console.log("Created post:", createdPost)
+            return createdPost;
         } catch (e) {
             console.log('Error adding post:', e);
         }
@@ -79,24 +64,7 @@ export const postsApi = {
             console.log(`Error updating post with id ${id}:`, e);
         }
     },
-    put: async (post) => {
-        try {
-            console.log("put in postsApi.jsx- Running", post)
-            const response = await fetch(`${API_URL}/${post.id}`, {//specifies which post to update
-                method: 'PUT',// use PUT to update
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(post),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to update post');
-            }
-            return await response.json();
-        } catch (e) {
-            console.log('Error updating post:', e);
-        }
-    },
+
     delete: async (id) => {// deletes a post by id.
         try {
             console.log("delete in postsApi.jsx - Running ", id);

@@ -1,18 +1,31 @@
+import React from 'react';
 import "./Posts.css";
 import PostList from './PostList';
 import { Spinner } from "react-bootstrap";
-import withPosts from './withPosts'; // Import the HOC
 
-const Posts = ({ posts, loading }) => { // pass posts and loading as props
+
+const Posts = ({ posts, loading, updatePost, deletePost }) => {// pass all these props to Posts
     return (
         <div className="posts">
             {loading ? (
                 <Spinner animation="border" variant="primary" />
             ) : (
-                <PostList posts={posts} /> // Passes posts to PostList as a prop
+                <>
+                {/* if there are any posts then do the following: */}
+                    {posts.length > 0 ? (
+                        <PostList // passes all these props to postList
+                            posts={posts} 
+                            updatePost={updatePost} 
+                            deletePost={deletePost} 
+                        />
+                    ) : (
+                        // Otherwise display this message
+                        <p>No posts available. Create a new post!</p>
+                    )}
+                </>
             )}
         </div>
     );
 };
 
-export default withPosts(Posts); // Wrap the component with the HOC
+export default Posts;

@@ -10,7 +10,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { Col, Row, Form } from 'react-bootstrap';
 
 const SinglePost = () => {
-    const { postId } = useParams();
+    const { postId } = useParams();// extracts the post ID from the URL using 'useParams'
     const [loading, setLoading] = useState(false);
     const [post, setPost] = useState({});
     const [comment, setComment] = useState('');
@@ -21,11 +21,11 @@ const SinglePost = () => {
         imgUrl: '',
         story: '',
     });
-    const [activeKey, setActiveKey] = useState(null); // State to control accordion toggle
+    const [activeKey, setActiveKey] = useState(null); // State to control accordion toggle. active=open
 
     useEffect(() => {
-        fetchPosts();
-    }, []);
+        fetchPosts();// calls the fetchPosts function when the component first mounts
+    }, []);// ensure it's only called once
 
     const fetchPosts = async () => {
         try {
@@ -44,7 +44,7 @@ const SinglePost = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const updatedPost = await postsApi.updatePost(postId, postData);
+            const updatedPost = await postsApi.updatePost(postId, postData);// sends updated data to the API
             setPost(updatedPost);// sets state to updatedPost
             toast.success("Post updated successfully!");
             setActiveKey(null); // Close the accordion after successful submission
@@ -58,21 +58,21 @@ const SinglePost = () => {
 
     const submitComment = async (e) => {
         e.preventDefault();
-        if (!comment) {
+        if (!comment) {// if there's no comments please enter a comment
             toast.error("Please enter a comment");
             return;
         }
         try {
             setLoading(true);
             const updatedPost = await postsApi.updatePost(postId, {
-                comments: [...post.comments, comment],
+                comments: [...post.comments, comment],// adds the new comment to the existing array of comments
             });
-            setPost(updatedPost);
+            setPost(updatedPost);// sets state to updatedPost
         } catch (e) {
             console.error('Error adding comment:', e);
             toast.error("Failed to add the comment.");
         } finally {
-            setComment('');
+            setComment('');// clears this input field
             setLoading(false);
         }
     };
@@ -97,7 +97,7 @@ const SinglePost = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPostData((prevData) => ({
-            ...prevData,// creates a new object with the same properties of the previous
+            ...prevData,// creates a new object and copies the existing state of the previous
             [name]: value,
         // This dynamically sets the property of the new object where the property name is the value 
         // of name (e.g., author, title, destination, etc.), and the value is the current value of 
