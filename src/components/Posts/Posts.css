@@ -1,7 +1,7 @@
 .posts {
     width: 100%;
     height: calc(100vh - 11vh);
-    background-image: url(/public/explore-the-world.jpeg);/*default background image*/
+    background-image: url(/public/explore-the-world.jpg);/*default background image*/
     background-size: contain;
     background-position: center;
     overflow: auto;

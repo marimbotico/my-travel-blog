@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(/public/explore-the-world.jpeg);
+    background-image: url(/public/explore-the-world.jpg);
     background-position: center;
     background-size: cover;
     overflow: auto;
