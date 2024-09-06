@@ -10,7 +10,7 @@ export const imagesApi = [
     {
         "id": "2",
         "title": "Cofete-3",
-        "image": './images/cofete-3.jpeg',
+        "image": './images/cofete-3.jpg',
     },
     {
         "id": "3",
