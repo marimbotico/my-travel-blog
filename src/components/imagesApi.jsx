@@ -25,7 +25,7 @@ export const imagesApi = [
     {
         "id": "5",
         "title": "Mallorca",
-        "image":'./images/mallorca.jpg',
+        "image":'./images/mallorca-1.jpg',
     },
     {
         "id": "6",
@@ -50,7 +50,7 @@ export const imagesApi = [
     {
         "id": "10",
         "title": "Whales in Costa Rica",
-        "image":'./images/whale.jpg',
+        "image":'./images/whale-1.jpg',
     },
     {
         "id": "11",
